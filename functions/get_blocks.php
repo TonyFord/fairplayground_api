@@ -1,10 +1,11 @@
 <?php
 
 $CSV="";
+$JSON=Array();
 
 echo "<textarea cols=100 rows=40>";
 
-$CSV.="Block;Timestamp;TxCount;TxAmount
+$CSV.="block;timestamp;tx_count;tx_amount
 ";
 
 $fp=fopen("../rawdata/last_update_blockheight.csv","r");
@@ -44,30 +45,35 @@ for( $i=$bh; $i>300; $i-=100 ){
 
   foreach($A as $a){
 
+    $J=Array();
+
     // get BlockNo
     $AA=preg_split("/>/",$a);
     $AAA=preg_split("/</",$AA[1]);
     $CSV.=trim( $AAA[0] ).";";
+    array_push($J,Array("block"=>trim( $AAA[0] )));
 
     // get timestamp
     $AA=preg_split("/<td>/",$a);
     $AAA=preg_split("/</",$AA[1]);
     $CSV.=trim( $AAA[0] ).";";
+    array_push($J,Array("timestamp"=>trim( $AAA[0] )));
 
     // get tx count
     $AA=preg_split("/<td>/",$a);
     $AAA=preg_split("/</",$AA[2]);
     $CSV.=trim( $AAA[0] ).";";
+    array_push($J,Array("tx_count"=>trim( $AAA[0] )));
 
     // get tx amount
     $AA=preg_split("/<td>/",$a);
     $AAA=preg_split("/</",$AA[6]);
     $CSV.=trim( $AAA[0] )."
 ";
+    array_push($J,Array("tx_amount"=>trim( $AAA[0] )));
+
+    array_push($JSON,$J);
   }
-
-
-
 }
 
 
@@ -78,6 +84,10 @@ echo "</textarea>";
 
 $fp=fopen("../rawdata/blocks.csv","w+");
 fwrite($fp,$CSV);
+fclose($fp);
+
+$fp=fopen("../rawdata/blocks.json","w+");
+fwrite($fp,json_encode( $JSON ));
 fclose($fp);
 
 ?>

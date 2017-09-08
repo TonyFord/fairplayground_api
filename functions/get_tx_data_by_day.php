@@ -3,9 +3,10 @@
 $CSV="";
 
 echo "<textarea cols=100 rows=40>";
-$CSV.="Day;TxCount;TxAmount
+$CSV.="date;tx_count;tx_amount
 ";
 
+$JSON=Array();
 
 
 $fp=fopen("../rawdata/last_update_blockheight.csv","r");
@@ -54,6 +55,7 @@ for( $i=$bh; $i>300; $i-=100 ){
 
     if($last_date != $dt ){
       if($last_date != ""){
+        array_push($JSON, Array("date"=>$last_date,"tx_count"=>$tx_count,"tx_amount"=>$tx_amount));
         $CSV.=$last_date.";".$tx_count.";".$tx_amount."
 ";
       }
@@ -86,6 +88,10 @@ echo "</textarea>";
 
 $fp=fopen("../rawdata/tx_by_day.csv","w+");
 fwrite($fp,$CSV);
+fclose($fp);
+
+$fp=fopen("../rawdata/tx_by_day.json","w+");
+fwrite($fp,json_encode($JSON));
 fclose($fp);
 
 ?>

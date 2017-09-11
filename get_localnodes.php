@@ -5,5 +5,5 @@ include("content_loader.php");
 
 $J = json_decode($data);
 
-echo json_encode( $J->{"layers"}[0] );
+echo json_encode( $J->{"layers"}[$LOCALNODES] );
 ?>

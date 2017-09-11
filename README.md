@@ -1,7 +1,7 @@
 # FairPlayGround API
 Get all data of FairPlayGround by API
 
-http://api.fairplayground.info/... 
+http://api.fairplayground.info/...
 
 ## Usage
 

@@ -37,3 +37,5 @@ get count of different countries of all local nodes
 http://api.fairplayground.info/get_localnodes.php
 
 get all localnodes ( json )
+
+Test

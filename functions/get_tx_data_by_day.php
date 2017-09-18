@@ -15,7 +15,7 @@ fclose($fp);
 
 for( $i=$bh; $i>300; $i-=100 ){
 
-  $filename="../rawdata/block_".$i.".html";
+  $filename="../rawdata/blocks/block_".$i.".html";
 
   if(file_exists($filename)){
 

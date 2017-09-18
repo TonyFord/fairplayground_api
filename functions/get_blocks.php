@@ -9,12 +9,12 @@ $CSV.="block;timestamp;tx_count;tx_amount
 ";
 
 $fp=fopen("../rawdata/last_update_blockheight.csv","r");
-$bh=fread($fp,12);
+$bh=intval( fread($fp,12) );
 fclose($fp);
 
 for( $i=$bh; $i>300; $i-=100 ){
 
-  $filename="../rawdata/block_".$i.".html";
+  $filename="../rawdata/blocks/block_".$i.".html";
 
   if(file_exists($filename)){
 

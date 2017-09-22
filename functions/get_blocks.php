@@ -1,5 +1,10 @@
 <?php
 
+$bh = 30690 + ( time() - 1505926037 ) / 180;
+$bh = intval( $bh/100 ) * 100;
+
+echo $bh;
+
 $CSV="";
 $JSON=Array();
 
@@ -8,9 +13,9 @@ echo "<textarea cols=100 rows=40>";
 $CSV.="block;timestamp;tx_count;tx_amount
 ";
 
-$fp=fopen("../rawdata/last_update_blockheight.csv","r");
-$bh=intval( fread($fp,12) );
-fclose($fp);
+//$fp=fopen("../rawdata/last_update_blockheight.csv","r");
+//$bh=intval( fread($fp,12) );
+//fclose($fp);
 
 for( $i=$bh; $i>300; $i-=100 ){
 

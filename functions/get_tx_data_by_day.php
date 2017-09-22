@@ -1,5 +1,11 @@
 <?php
 
+
+$bh = 30690 + ( time() - 1505926037 ) / 180;
+$bh = intval( $bh/100 ) * 100;
+
+echo $bh;
+
 $CSV="";
 
 echo "<textarea cols=100 rows=40>";
@@ -9,9 +15,9 @@ $CSV.="date;tx_count;tx_amount
 $JSON=Array();
 
 
-$fp=fopen("../rawdata/last_update_blockheight.csv","r");
-$bh=fread($fp,12);
-fclose($fp);
+//$fp=fopen("../rawdata/last_update_blockheight.csv","r");
+//$bh=fread($fp,12);
+//fclose($fp);
 
 for( $i=$bh; $i>300; $i-=100 ){
 
@@ -55,7 +61,7 @@ for( $i=$bh; $i>300; $i-=100 ){
 
     if($last_date != $dt ){
       if($last_date != ""){
-        array_push($JSON, Array("date"=>$last_date,"tx_count"=>$tx_count,"tx_amount"=>$tx_amount));
+        array_push($JSON, Array("date"=>$last_date,"blocks"=>$blocks, "tx_count"=>$tx_count,"tx_amount"=>$tx_amount));
         $CSV.=$last_date.";".$tx_count.";".$tx_amount."
 ";
       }
@@ -63,7 +69,11 @@ for( $i=$bh; $i>300; $i-=100 ){
 
       $tx_count=0;
       $tx_amount=0;
+      $blocks=0;
     }
+
+    // get blocks
+    $blocks++;
 
     // get tx count
     $AA=preg_split("/<td>/",$a);
@@ -74,11 +84,8 @@ for( $i=$bh; $i>300; $i-=100 ){
     $AA=preg_split("/<td>/",$a);
     $AAA=preg_split("/</",$AA[6]);
     $tx_amount += $AAA[0];
-
+    
   }
-
-
-
 }
 
 

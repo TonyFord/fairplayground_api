@@ -33,7 +33,15 @@
 <head>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-
+  <style>
+    .row:first-child {
+      font-weight: bold;
+    }
+    .form-control {
+      display:contents !important;
+      width:80% !important
+    }
+  </style>
 </head>
 <body>
   <form method="POST">
@@ -71,7 +79,7 @@
   <div class=\"col-2\">".$newD."</div>
   ";
     foreach($j->{"fields"} as $k){
-      echo "<div class=\"col\"><input name=\"".$j->{"id"}."_".$k->{"id"}."\" type=\"text\" class=\"form-control\" placeholder=\"".$k->{"label"}." ( ".$k->{"value_min"}." to ".$k->{"value_max"}." , last ".$L->{ $j->{"id"} }->{"fields"}->{ $k->{"id"} }." )\"><a href='".$k->{"url"}."' target='datasource'>URL</a></div>
+      echo "<div class=\"col\"><input name=\"".$j->{"id"}."_".$k->{"id"}."\" type=\"text\" class=\"form-control form-control-sm\" placeholder=\"".$k->{"label"}." ( ".$k->{"value_min"}." to ".$k->{"value_max"}." , last ".$L->{ $j->{"id"} }->{"fields"}->{ $k->{"id"} }." )\"> <a href='".$k->{"url"}."' target='datasource'>URL</a></div>
       ";
     }
     echo "</div>";

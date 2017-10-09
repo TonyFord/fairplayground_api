@@ -60,7 +60,7 @@ if( $_POST["JSN"] != null ){
       <div class="form-group row">
         <label for="e_name" class="col-sm-2 col-form-label">name*</label>
         <div class="col-sm-10">
-          <input id="e_name" name="e_name" type="text" class="form-control" placeholder="Local Node - Athens">
+          <input id="e_name" name="e_name" type="text" class="form-control" placeholder="Athens">
         </div>
       </div>
 
@@ -132,7 +132,7 @@ if( $_POST["JSN"] != null ){
       <div class="form-group row">
         <label for="e_establishing_assembly" class="col-sm-2 col-form-label">Establishing Assembly</label>
         <div class="col-sm-10">
-          <input id="e_establishing_assembly" name="e_establishing_assembly" type="text" class="form-control" placeholder="March 2017">
+          <input id="e_establishing_assembly" name="e_establishing_assembly" type="text" class="form-control" placeholder="YYYY-MM-DD">
         </div>
       </div>
 
@@ -144,7 +144,7 @@ if( $_POST["JSN"] != null ){
       </div>
 
       <div class="form-group row">
-        <label for="e_involved" class="col-sm-2 col-form-label">Involved in ( use tags )</label>
+        <label for="e_involved" class="col-sm-2 col-form-label">Involved in projects ( use tags )</label>
         <div class="col-sm-10">
           <input id="e_involved" name="e_involved" type="text" class="form-control" placeholder="#Exchange_Office #FairPay #FairMarket #FreedomCoop #Stargate #Fairspot #NPO">
         </div>
@@ -154,7 +154,7 @@ if( $_POST["JSN"] != null ){
           Existing tags
         </div>
         <div class="col-sm-10">
-          <span id="involved_tags"></span>
+          <span id="projects_involved"></span>
         </div>
       </div>
 
@@ -190,7 +190,7 @@ if( $_POST["JSN"] != null ){
       JSN.forEach(
         function( v,i ){
           L.push(v.properties.id);
-          var T=v.properties.involved_tags.split(/\#/g);
+          var T=v.properties.projects_involved.split(/\#/g);
           T.shift();
           T.forEach(
             function( w, j){
@@ -202,7 +202,7 @@ if( $_POST["JSN"] != null ){
 
       tags.forEach(
         function( w,i ){
-          $("#involved_tags").append( "#" + w + " " );
+          $("#projects_involved").append( "#" + w + " " );
         }
       );
 
@@ -253,7 +253,7 @@ if( $_POST["JSN"] != null ){
               $("#e_participants").val( v.properties.participants );
               $("#e_establishing_assembly").val( v.properties.establishing_assembly );
               $("#e_assembly_notes").val( v.properties.assembly_notes );
-              $("#e_involved").val( v.properties.involved_tags );
+              $("#e_involved").val( v.properties.projects_involved );
             }
           }
         );
@@ -276,7 +276,7 @@ if( $_POST["JSN"] != null ){
 
       // check if new dataset and add
       if( entry_id == "NEW"){
-        var J={"type":"Feature","properties":{"_storage_options":{"iconUrl":"","color":""},"id":"NEW","name":"","description":"","contact":"","fairnetwork_profile":"","OCP_project_profile":"","participants":"","establishing_assembly":"","assembly_notes":"","involved_tags":""},"geometry":{"type":"Point","coordinates":[0,0]}}
+        var J={"type":"Feature","properties":{"_storage_options":{"iconUrl":"","color":""},"id":"NEW","name":"","description":"","contact":"","fairnetwork_profile":"","OCP_project_profile":"","participants":"","establishing_assembly":"","assembly_notes":"","projects_involved":""},"geometry":{"type":"Point","coordinates":[0,0]}}
         JSN.push(J);
         JSN[JSN.length-1].properties.id=$("#e_id").val();
         entry_id = $("#e_id").val();
@@ -302,7 +302,7 @@ if( $_POST["JSN"] != null ){
             JSN[i].properties.participants = $("#e_participants").val();
             JSN[i].properties.establishing_assembly = $("#e_establishing_assembly").val();
             JSN[i].properties.assembly_notes = $("#e_assembly_notes").val();
-            JSN[i].properties.involved_tags = $("#e_involved").val();
+            JSN[i].properties.projects_involved = $("#e_involved").val();
           }
         }
       );

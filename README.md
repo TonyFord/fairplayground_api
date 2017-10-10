@@ -5,7 +5,7 @@ http://api.fairplayground.info/...
 
 ## Usage
 
-### php ( server side )####
+### php ( server side ) ###
 
     // load JSON or CSV by fopen
     $filename="http://api.fairplayground.info/...";
@@ -35,6 +35,15 @@ http://api.fairplayground.info/...
     }
 
 ### javascript & jquery ( client side ) ###
+
+    <head>
+      <script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous">
+      </script>
+    </head>
+    <script>
 
     var filename = "http://api.fairplayground.info/...";
 
@@ -70,6 +79,8 @@ http://api.fairplayground.info/...
 
       return json;
     }
+
+    </script>
 
 ## Parameters
 

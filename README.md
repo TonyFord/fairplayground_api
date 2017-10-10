@@ -82,6 +82,8 @@ http://api.fairplayground.info/...
 
     </script>
 
+JSON get by different languages see here https://www.tutorialspoint.com/json/json_python_example.htm
+
 ## Parameters
 
 

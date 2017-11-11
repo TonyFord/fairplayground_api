@@ -3,7 +3,8 @@
 $bh = 30690 + ( time() - 1505926037 ) / 180;
 $bh = intval( $bh/100 ) * 100;
 
-echo $bh;
+$filename="../rawdata/blocks/block_".( $bh-400 ).".html";
+if( file_exists($filename) ) exit;
 
 $CSV="";
 $JSON=Array();
@@ -94,5 +95,7 @@ fclose($fp);
 $fp=fopen("../rawdata/blocks.json","w+");
 fwrite($fp,json_encode( $JSON ));
 fclose($fp);
+
+include("get_tx_data_by_day.php");
 
 ?>

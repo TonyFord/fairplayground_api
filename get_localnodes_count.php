@@ -1,12 +1,13 @@
 <?php
 
 // get json data to $data
-$fp=fopen("rawdata/LN_map_data.json","r");
-$data=fread($fp,filesize("rawdata/LN_map_data.json"));
+$fn="rawdata/FCLN.geo.json";
+$fp=fopen($fn,"r");
+$data=fread($fp,filesize($fn));
 fclose($fp);
 
 $J = json_decode($data);
 
-echo count($J);
+echo count($J->{"features"}[0]);
 
 ?>

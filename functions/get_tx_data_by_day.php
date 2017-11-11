@@ -4,20 +4,15 @@
 $bh = 30690 + ( time() - 1505926037 ) / 180;
 $bh = intval( $bh/100 ) * 100;
 
-echo $bh;
 
 $CSV="";
 
 echo "<textarea cols=100 rows=40>";
-$CSV.="date;tx_count;tx_amount
+$CSV.="date;tx_count;tx_amount,tx_count_ex
 ";
 
 $JSON=Array();
 
-
-//$fp=fopen("../rawdata/last_update_blockheight.csv","r");
-//$bh=fread($fp,12);
-//fclose($fp);
 
 for( $i=$bh; $i>300; $i-=100 ){
 
@@ -50,6 +45,7 @@ for( $i=$bh; $i>300; $i-=100 ){
   array_shift($A);
 
 
+
   foreach($A as $a){
 
     // get timestamp
@@ -59,11 +55,13 @@ for( $i=$bh; $i>300; $i-=100 ){
     $dt=substr( trim( $AAA[0]), 0, 10 );
 
 
+
     if($last_date != $dt ){
       if($last_date != ""){
-        array_push($JSON, Array("date"=>$last_date,"blocks"=>$blocks, "tx_count"=>$tx_count,"tx_amount"=>$tx_amount));
-        $CSV.=$last_date.";".$tx_count.";".$tx_amount."
-";
+
+        array_push($JSON, Array("date"=>$last_date,"blocks"=>$blocks, "tx_count"=>$tx_count,"tx_amount"=>$tx_amount,"tx_count_ex"=>( $tx_count-$blocks )));
+
+
       }
       $last_date=substr( trim( $AAA[0]), 0, 10 );
 
@@ -84,10 +82,24 @@ for( $i=$bh; $i>300; $i-=100 ){
     $AA=preg_split("/<td>/",$a);
     $AAA=preg_split("/</",$AA[6]);
     $tx_amount += $AAA[0];
-    
+
   }
 }
 
+$JSON=array_reverse($JSON);
+array_pop($JSON);
+$TX_COUNT_AVG=Array();
+
+for( $i=0; $i<count($JSON); $i++ ){
+  array_push( $TX_COUNT_AVG, $JSON[$i]["tx_count_ex"] );
+  if( count($TX_COUNT_AVG) > 6 ){
+    array_shift( $TX_COUNT_AVG );
+  }
+  $tx_count_ex_avg = round( array_sum($TX_COUNT_AVG) / count($TX_COUNT_AVG) );
+  $CSV.=$JSON[$i]["date"].";".$JSON[$i]["tx_count"].";".$JSON[$i]["tx_amount"].";".$JSON[$i]["tx_count_ex"].";".$tx_count_ex_avg."
+";
+  $JSON[$i]["tx_count_ex_avg"] = $tx_count_ex_avg;
+}
 
 echo $CSV;
 
@@ -96,6 +108,9 @@ echo "</textarea>";
 $fp=fopen("../rawdata/tx_by_day.csv","w+");
 fwrite($fp,$CSV);
 fclose($fp);
+
+
+array_shift($JSON);
 
 $fp=fopen("../rawdata/tx_by_day.json","w+");
 fwrite($fp,json_encode($JSON));

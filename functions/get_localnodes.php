@@ -1,15 +1,26 @@
 <?php
 
-// get json data to $data
-$filename="../rawdata/LN_map_data.json";
-$fp=fopen($filename,"r");
-$data=fread($fp,filesize($filename));
+
+// map JSON data
+$F = glob("../rawdata/map_entries/FCLN/*.json");
+
+$JSN=Array();
+
+foreach( $F as $f ){
+
+  $fp=fopen($f,"r");
+  $J=json_decode( fread( $fp,filesize($f) ),true);
+  fclose($fp);
+  array_push($JSN, $J);
+}
+
+$fp=fopen("../rawdata/FCLN.geo.json","w+");
+fwrite( $fp, "{ \"type\": \"FeatureCollection\", \"features\": [".json_encode($JSN)."] }");
 fclose($fp);
 
-$J=json_decode($data,true);
 $A=Array();
-for( $i=0; $i < count($J); $i++ ){
-  array_push( $A, $J[$i]["properties"]["establishing_assembly"] );
+for( $i=0; $i < count($JSN); $i++ ){
+  array_push( $A, $JSN[$i]["properties"]["establishing_assembly"] );
 }
 
 sort($A);

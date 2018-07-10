@@ -1,7 +1,8 @@
 <?php
 
-$bh = 30690 + ( time() - 1505926037 ) / 180;
+$bh = 29500 + ( time() - 1505926037 ) / 180;
 $bh = intval( $bh/100 ) * 100;
+
 
 $filename="../rawdata/blocks/block_".( $bh-400 ).".html";
 if( file_exists($filename) ) exit;

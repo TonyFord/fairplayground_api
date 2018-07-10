@@ -120,7 +120,7 @@ $( document ).ready(function() {
 });
 
 function create_list(){
-  var J=json_load( "rawdata/FCLN.geo.json","json").features[0];
+  var J=json_load( "http://fairplayground.info/datasources/FCLN/FCLN.geo.json","json" );
   J.forEach(
     function(v,i){
       $("#navbar table").append("<tr class=\"ttt\" onmouseover='$(this).toggleClass(\"thover\",true); console.log( this,\"in\" )' onmouseout='$(this).toggleClass(\"thover\",false); console.log( this,\"out\" )'><td><a href='#" + (v.properties.id).replace(/\./g,"_") + "'>" + (v.properties.id).replace(/FCLN\./g,"") + "</a></td><td><a href='#" + (v.properties.id).replace(/\./g,"_") + "'>" + v.properties.name + "</a></td></tr>");

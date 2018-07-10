@@ -1,9 +1,8 @@
 <?php
 
 
-$bh = 30690 + ( time() - 1505926037 ) / 180;
+$bh = 29500 + ( time() - 1505926037 ) / 180;
 $bh = intval( $bh/100 ) * 100;
-
 
 $CSV="";
 
@@ -43,6 +42,11 @@ for( $i=$bh; $i>300; $i-=100 ){
   $A=preg_split("/<a href=\"block?/", $data);
 
   array_shift($A);
+
+
+  echo $i."
+---------------------------------------------
+";
 
 
 
@@ -86,6 +90,7 @@ for( $i=$bh; $i>300; $i-=100 ){
   }
 }
 
+
 $JSON=array_reverse($JSON);
 array_pop($JSON);
 $TX_COUNT_AVG=Array();
@@ -101,9 +106,10 @@ for( $i=0; $i<count($JSON); $i++ ){
   $JSON[$i]["tx_count_ex_avg"] = $tx_count_ex_avg;
 }
 
-echo $CSV;
 
 echo "</textarea>";
+
+var_dump($JSON);
 
 $fp=fopen("../rawdata/tx_by_day.csv","w+");
 fwrite($fp,$CSV);

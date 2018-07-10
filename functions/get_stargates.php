@@ -1,12 +1,22 @@
 <?php
 
-// get json data to $data
-//$fn="../../datasources/FCLN/FCLN.geo.json";
-//$fp=fopen($fn,"r");
-//$data=fread($fp,filesize($fn));
-//fclose($fp);
 
-exit;
+// map JSON data
+$F = glob("../rawdata/stargate_entries/STGT/*.json");
+
+$JSN=Array();
+
+foreach( $F as $f ){
+
+  $fp=fopen($f,"r");
+  $J=json_decode( fread( $fp,filesize($f) ),true);
+  fclose($fp);
+  array_push($JSN, $J);
+}
+
+$fp=fopen("../rawdata/STGT.geo.json","w+");
+fwrite( $fp, "{ \"type\": \"FeatureCollection\", \"features\": [".json_encode($JSN)."] }");
+fclose($fp);
 
 $A=Array();
 for( $i=0; $i < count($JSN); $i++ ){
